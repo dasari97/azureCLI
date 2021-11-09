@@ -2,7 +2,7 @@ stages:
   - stage: CodeQualityStage
     displayName : 'Code Quality Stage'
     jobs:
-    - job: SubmitStage
+    - job: Submitjob
       displayName: 'Job to submit code for  Quality check'
       steps: 
       - script : |
@@ -10,7 +10,7 @@ stages:
         displayName : 'Submited code'
     - job: CodeQualityReport
       displayName : 'CodeQuality Report Job'
-      dependsOn : SubmitStage
+      dependsOn : Submitjob
       steps:
       - script : |
           echo "Code Quality is Good"
