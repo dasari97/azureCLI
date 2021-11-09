@@ -1,17 +1,15 @@
 stages:
   - stage: CodeQualityStage
-    displayName : 'Code Quality Stage'
+    displayName: 'Code Quality Stage'
     jobs:
-    - job: Submitjob
-      displayName: 'Job to submit code for  Quality check'
-      steps: 
-      - script : |
-          echo " Code is submitted for the Quality check."
-        displayName : 'Submited code'
-    - job: CodeQualityReport
-      displayName : 'CodeQuality Report Job'
-      dependsOn : Submitjob
+    - job: SubmitQualityCheckJob
+      displayName: 'Submit Code For Quality Check'
       steps:
-      - script : |
-          echo "Code Quality is Good"
-        displayName: 'Result'
+      - script: echo "Submitted code for Quality Check"
+        displayName: 'CodeQuality Report Job'
+    - job: CodeQualityReport
+      displayName: 'Report checking Job'
+      dependsOn: SubmitQualityCheckJob
+      steps:
+      - script: echo "Code Quality Good"
+        displayName: 'Code Quality Check with SonarQube'
