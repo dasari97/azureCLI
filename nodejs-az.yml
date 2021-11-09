@@ -17,5 +17,5 @@ stages:
       steps:
       - script : |
           cd $(Build.BinariesDirectory)
-          az artifacts universal publish --organization https://dev.azure.com/dasarisaikrishna97/ --project="Roboshop" --scope project --feed WS --name cart --version ${BUILD_SOURCEBRANCHNAME} --description "Welcome to Universal Packages" --path .
+          az artifacts universal publish --organization https://dev.azure.com/dasarisaikrishna97/ --project="Roboshop" --scope project --feed WS --name ${COMPONENT} --version ${BUILD_SOURCEBRANCHNAME} --description "Welcome to Universal Packages" --path .
         displayName: 'Publishing Artifacts'
