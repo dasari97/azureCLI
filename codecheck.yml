@@ -1,0 +1,15 @@
+stages:
+  - stage: CodeQuality
+    displayName: CodeQuality
+    jobs:
+    - job: SubmitQualityCheck
+      displayName: SubmitQualityCheck
+      steps:
+      - script: echo Submit Quality Check
+        displayName: 'Code Quality Check with SonarQube'
+    - job: CodeQualityCheck
+      displayName: CodeQualityCheck
+      dependsOn: SubmitQualityCheck
+      steps:
+      - script: echo Code Quality Check
+        displayName: 'Code Quality Check with SonarQube'
