@@ -1,0 +1,16 @@
+stages:
+  - stage: TestingStage
+    displayName : 'Code Test Stage'
+    jobs:
+    - job: UnitTestStage
+      displayName: 'job to do Unit tests'
+      steps: 
+      - script : |
+          echo "Code test passed."
+        displayName : 'Unit test'
+    - job: LintCheckStage
+      displayName : 'Code Lint checking Job'
+      steps:
+      - script : |
+          echo "Code lint is Good"
+        displayName: 'Lint checking'
