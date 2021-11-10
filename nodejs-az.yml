@@ -27,4 +27,6 @@ stages:
           cd ami
           terraform init
           terraform apply -auto-approve -var APP_VERSION=${BUILD_SOURCEBRANCHNAME}
+          terraform state rm module.ami.aws_ami_from_instance.ami
+          terraform destroy -auto-approve -var APP_VERSION=${BUILD_SOURCEBRANCHNAME}
         displayName: 'Publishing AMI'
