@@ -1,27 +1,27 @@
 stages:
   - stage: ArtifactsStage
     displayName : 'Artifacts Stage'
-    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+#    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     jobs:
-    - job: Preparing_Artifacts
-      displayName: 'preparing the Artifacts Job'
-      steps: 
-      - script : |
-          env
-          npm install
-          cp -r node_modules server.js $(Build.BinariesDirectory)/.
-        displayName : 'preparing the Artifacts'
-    - job: publishing_Artifacts
-      displayName : 'Publsihing Artifacts Job'
-      dependsOn : Preparing_Artifacts
-      steps:
-      - script : |
-          cd $(Build.BinariesDirectory)
-          az artifacts universal publish --organization https://dev.azure.com/dasarisaikrishna97/ --project="Roboshop" --scope project --feed WS --name ${COMPONENT} --version ${BUILD_SOURCEBRANCHNAME} --description "Welcome to Universal Packages" --path .
-        displayName: 'Publishing Artifacts'
+#    - job: Preparing_Artifacts
+#      displayName: 'preparing the Artifacts Job'
+#      steps: 
+#      - script : |
+#          env
+#          npm install
+#          cp -r node_modules server.js $(Build.BinariesDirectory)/.
+#        displayName : 'preparing the Artifacts'
+#    - job: publishing_Artifacts
+#      displayName : 'Publsihing Artifacts Job'
+#      dependsOn : Preparing_Artifacts
+#      steps:
+#      - script : |
+#          cd $(Build.BinariesDirectory)
+#          az artifacts universal publish --organization https://dev.azure.com/dasarisaikrishna97/ --project="Roboshop" --scope project --feed WS --name ${COMPONENT} --version ${BUILD_SOURCEBRANCHNAME} --description "Welcome to Universal Packages" --path .
+#        displayName: 'Publishing Artifacts'
     - job: publishing_AMI
       displayName : 'Publsihing AMI Job'
-      dependsOn : Publishing_Artifacts
+#      dependsOn : Publishing_Artifacts
       steps:
       - script : |
           cd ami
