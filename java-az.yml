@@ -18,3 +18,14 @@ stages:
           cd $(Build.BinariesDirectory)
           az artifacts universal publish --organization https://dev.azure.com/dasarisaikrishna97/ --project="Roboshop" --scope project --feed WS --name ${COMPONENT} --version ${BUILD_SOURCEBRANCHNAME} --description "Welcome to Universal Packages" --path .
         displayName: 'Publishing Artifacts'
+    - job: publishing_AMI
+      displayName : 'Publsihing AMI Job'
+      dependsOn : Publishing_Artifacts
+      steps:
+      - script : |
+          cd ami
+          terraform init
+          terraform apply -auto-approve -var APP_VERSION=${BUILD_SOURCEBRANCHNAME}
+          terraform state rm module.ami.aws_ami_from_instance.ami
+          terraform destroy -auto-approve -var APP_VERSION=${BUILD_SOURCEBRANCHNAME}
+        displayName: 'Publishing AMI'
