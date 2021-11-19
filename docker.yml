@@ -1,0 +1,20 @@
+stages:
+  - stage: ArtifactsStage
+    displayName : 'Artifacts Stage'
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+    jobs:
+    - job: ImageBuild
+      displayName : 'ImageBuild'
+      steps:
+      - script : |
+          docker build -t 795902710157.dkr.ecr.us-east-1.amazonaws.com/${COMPONENT}:${BUILD_SOURCEBRANCHNAME}  .
+        displayName: 'ImageBuild'
+    - job: ImagePush
+      displayName : 'ImagePush'
+      dependsOn:  ImageBuild
+      steps:
+      - script : |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 795902710157.dkr.ecr.us-east-1.amazonaws.com
+          docker push 795902710157.dkr.ecr.us-east-1.amazonaws.com/${COMPONENT}:${BUILD_SOURCEBRANCHNAME}
+        displayName: 'ImagePush'
+    
